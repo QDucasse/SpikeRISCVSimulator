@@ -10,7 +10,7 @@ SpikeTest >> testMemoryReadBytesAtAddressInBuffer [
 	
 	| spi bufferRead |
 	spi := Spike new.
-	bufferRead := ByteArray new size: 4.
+	bufferRead := ByteArray new: 4.
 	spi memoryAt: 16r1000 write: #[1 2 3 4] size: 4.
 	spi doMemoryReadBytes: 4 atAddress: 16r1000 inBuffer: bufferRead.
 	self assert: bufferRead equals: #[1 2 3 4].
