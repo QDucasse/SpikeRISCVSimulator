@@ -10,6 +10,7 @@ Class {
 { #category : #initialization }
 SpikeConstants class >> initialize [ 
 
+	"self initialize"
 	SP_ERR_OK := 0
 ]
 
