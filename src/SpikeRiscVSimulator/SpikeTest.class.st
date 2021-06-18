@@ -48,3 +48,16 @@ SpikeTest >> testReadAndWriteRegisterX3 [
 
 
 ]
+
+{ #category : #tests }
+SpikeTest >> testRegisterReadInto [
+
+	| spi buffer_read | 
+
+	spi := Spike new.
+	buffer_read  := #[15 15 15 15].
+	spi register: 3 readInto: buffer_read.
+	self assert: buffer_read equals: #[0 0 0 0].
+
+
+]
