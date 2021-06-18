@@ -9,6 +9,6 @@ Class {
 
 { #category : #initialization }
 SpikeTypes class >> initialize [ 
-
+	"self initialize"
 	Sp_err := #int.
 ]

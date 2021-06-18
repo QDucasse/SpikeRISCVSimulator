@@ -1,6 +1,9 @@
 Class {
 	#name : #Spike,
 	#superclass : #FFIExternalObject,
+	#instVars : [
+		'memoryRegions'
+	],
 	#pools : [
 		'SpikeConstants',
 		'SpikeTypes'
@@ -8,16 +11,28 @@ Class {
 	#category : #SpikeRiscVSimulator
 }
 
-{ #category : #initialization }
-Spike class >> createSimulator [
-
-	self ffiCall: #(void* initialize_sim ())
-]
-
 { #category : #resources }
 Spike class >> ffiLibrary [ 
 		
 	^ SpikeLibrary 
+]
+
+{ #category : #initialization }
+Spike >> createSimulatorWithMemoryRegions: regions ofSize: regionsNumber [
+	
+	self ffiCall: #(void* initialize_sim (void* regions, int regionsNumber))
+]
+
+{ #category : #registers }
+Spike >> doMemoryAt: anAddress write: aByteArray size: aSize [ 
+
+	self ffiCall: #(Sp_err write_memory(self, uint64 anAddress, uint64 aSize, void* aByteArray))
+]
+
+{ #category : #registers }
+Spike >> doMemoryReadBytes: aSize atAddress: anAddress inBuffer: aByteArray [ 
+
+	self ffiCall: #(Sp_err read_memory(self, uint64 anAddress, uint64 aSize, void* aByteArray))
 ]
 
 { #category : #initialization }
@@ -29,14 +44,28 @@ Spike >> ffiLibraryName [
 { #category : #initialization }
 Spike >> initialize [ 
 
+	| externalArray |
 	super initialize.
-	handle := Spike createSimulator. 
+	externalArray := FFIExternalArray externalNewType: #SpikeMemoryRegion size: 1.
+	externalArray autoRelease.
+	memoryRegions := { (SpikeMemoryRegion base: 16r1000 content: (ByteArray new: 4096)) }.
+	externalArray at: 1 put: (memoryRegions at:1).
+	handle := self createSimulatorWithMemoryRegions: externalArray getHandle ofSize: 1.
 ]
 
-{ #category : #initialization }
-Spike >> primInitializeSimulator [
+{ #category : #registers }
+Spike >> memoryAt: anAddress write: aByteArray [
 
-	self ffiCall: #(void* initialize_sim ())
+	self memoryAt: anAddress write: aByteArray size: aByteArray size.
+]
+
+{ #category : #registers }
+Spike >> memoryAt: anAddress write: aByteArray size: aSize [ 
+
+	| result |
+	result := self doMemoryAt: anAddress write: aByteArray size: aSize.
+	self verifyErrorCode: result.
+	^ result
 ]
 
 { #category : #registers }
