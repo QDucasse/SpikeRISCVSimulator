@@ -29,14 +29,14 @@ Spike >> initialize [
 	handle := Spike createSimulator. 
 ]
 
-{ #category : #initialization }
+{ #category : #registers }
 Spike >> register: regid readInto: value [
 	"Read the value of register no regid and store it in value"
 	
 	self ffiCall: #(void read_register(self, int regid, void* value))
 ]
 
-{ #category : #initialization }
+{ #category : #registers }
 Spike >> register: regid write: value [
 	"Write the contents of value in register regid"
 	
