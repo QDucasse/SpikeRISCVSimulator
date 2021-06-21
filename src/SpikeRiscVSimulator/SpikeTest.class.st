@@ -16,8 +16,20 @@ SpikeTest >> setUp [
 ]
 
 { #category : #tests }
+SpikeTest >> testDoMemoryRead10BytesAtAddressInBuffer [ 
+	
+	"10 bytes not supported directlydirectly by the CPP function -> read one by one"
+	| bufferRead |
+	bufferRead := ByteArray new: 10.
+	spi memoryAt: 16r1000 write: #[10 10 10 10 10 10 10 10 10 10] size: 10.
+	spi doMemoryReadBytes: 10 atAddress: 16r1000 inBuffer: bufferRead.
+	self assert: bufferRead equals: #[10 10 10 10 10 10 10 10 10 10].
+]
+
+{ #category : #tests }
 SpikeTest >> testDoMemoryRead1ByteAtAddressInBuffer [ 
 
+	"1 byte supported by the CPP function directly"
 	| bufferRead |
 	bufferRead := ByteArray new: 1.
 	spi memoryAt: 16r1000 write: #[1] size: 1.
@@ -28,16 +40,18 @@ SpikeTest >> testDoMemoryRead1ByteAtAddressInBuffer [
 { #category : #tests }
 SpikeTest >> testDoMemoryRead2BytesAtAddressInBuffer [ 
 
+	"2 bytes supported by the CPP function directly"
 	| bufferRead |
 	bufferRead := ByteArray new: 2.
-	spi memoryAt: 16r1000 write: #[1 2] size: 2.
+	spi memoryAt: 16r1000 write: #[2 2] size: 2.
 	spi doMemoryReadBytes: 2 atAddress: 16r1000 inBuffer: bufferRead.
-	self assert: bufferRead equals: #[1 2].
+	self assert: bufferRead equals: #[2 2].
 ]
 
 { #category : #tests }
 SpikeTest >> testDoMemoryRead4BytesAtAddressInBuffer [ 
 	
+	"4 bytes supported by the CPP function directly"
 	| bufferRead |
 	bufferRead := ByteArray new: 4.
 	spi memoryAt: 16r1000 write: #[4 4 4 4] size: 4.
@@ -48,6 +62,7 @@ SpikeTest >> testDoMemoryRead4BytesAtAddressInBuffer [
 { #category : #tests }
 SpikeTest >> testDoMemoryRead8BytesAtAddressInBuffer [ 
 	
+	"8 bytes supported by the CPP function directly"
 	| bufferRead |
 	bufferRead := ByteArray new: 8.
 	spi memoryAt: 16r1000 write: #[8 8 8 8 8 8 8 8] size: 8.
