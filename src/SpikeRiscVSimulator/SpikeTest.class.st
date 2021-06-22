@@ -15,6 +15,33 @@ SpikeTest >> setUp [
 	
 ]
 
+{ #category : #running }
+SpikeTest >> tearDown [
+
+	spi finalize.
+	
+]
+
+{ #category : #tests }
+SpikeTest >> testExecuteAddInstruction [
+	
+	"Add two values to registers x6 and x7, add them and store the result in x5"
+	| bufferX5 bufferX6 bufferX7 instrAdd |
+	bufferX5 := #[16r00 16r00 16r00 16r00]. 
+	bufferX6 := #[16r11 16r11 16r00 16r00].
+	bufferX7 := #[16r00 16r00 16r11 16r11].	
+	instrAdd := #[16rB3 16r02 16r73 16r00].
+	"Write the values to the registers"
+	spi register: SpikeRISCVRegisters x5 write: bufferX5.
+	spi register: SpikeRISCVRegisters x6 write: bufferX6.	
+	spi register: SpikeRISCVRegisters x7 write: bufferX7.
+	"Write the instruction in memory"
+	spi memoryAt: 16r1000 write: instrAdd.
+	spi startAt: 16r1000 until: 16r1004 timeout: 0 count: 0.
+	spi register: SpikeRISCVRegisters x5 readInto: bufferX5.
+	self assert: bufferX5 equals: #[16r11 16r11 16r11 16r11].
+]
+
 { #category : #tests }
 SpikeTest >> testMemoryWriteRead10Bytes [ 
 	

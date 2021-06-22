@@ -45,7 +45,7 @@ Spike >> doStartAt: beginAddress until: endAddress timeout: timeout count: count
 	   - end address reached by PC 
 	   - timeout 
 	   - maximum number of instructions reached"
-	^ self ffiCall: #(Sp_err spike_start(self, uint64 begin_address, uint64 end_address, uint64 timeout, size_t count))
+	^ self ffiCall: #(Sp_err spike_start(self, uint64 beginAddress, uint64 endAddress, uint64 timeout, size_t count))
 ]
 
 { #category : #initialization }

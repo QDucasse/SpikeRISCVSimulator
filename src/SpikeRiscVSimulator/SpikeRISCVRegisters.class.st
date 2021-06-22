@@ -536,3 +536,8 @@ SpikeRISCVRegisters class >> x9 [
 	
 	^ SPIKE_RISCV_REG_X9
 ]
+
+{ #category : #converting }
+SpikeRISCVRegisters >> asInteger [
+	^ self value
+]
