@@ -16,7 +16,7 @@ SpikeTest >> setUp [
 ]
 
 { #category : #tests }
-SpikeTest >> testDoMemoryRead10BytesAtAddressInBuffer [ 
+SpikeTest >> testMemoryWriteRead10Bytes [ 
 	
 	"10 bytes not supported directlydirectly by the CPP function -> read one by one"
 	| bufferRead |
@@ -27,7 +27,7 @@ SpikeTest >> testDoMemoryRead10BytesAtAddressInBuffer [
 ]
 
 { #category : #tests }
-SpikeTest >> testDoMemoryRead1ByteAtAddressInBuffer [ 
+SpikeTest >> testMemoryWriteRead1Byte [ 
 
 	"1 byte supported by the CPP function directly"
 	| bufferRead |
@@ -38,7 +38,7 @@ SpikeTest >> testDoMemoryRead1ByteAtAddressInBuffer [
 ]
 
 { #category : #tests }
-SpikeTest >> testDoMemoryRead2BytesAtAddressInBuffer [ 
+SpikeTest >> testMemoryWriteRead2Bytes [ 
 
 	"2 bytes supported by the CPP function directly"
 	| bufferRead |
@@ -49,7 +49,7 @@ SpikeTest >> testDoMemoryRead2BytesAtAddressInBuffer [
 ]
 
 { #category : #tests }
-SpikeTest >> testDoMemoryRead4BytesAtAddressInBuffer [ 
+SpikeTest >> testMemoryWriteRead4Bytes [ 
 	
 	"4 bytes supported by the CPP function directly"
 	| bufferRead |
@@ -60,7 +60,7 @@ SpikeTest >> testDoMemoryRead4BytesAtAddressInBuffer [
 ]
 
 { #category : #tests }
-SpikeTest >> testDoMemoryRead8BytesAtAddressInBuffer [ 
+SpikeTest >> testMemoryWriteRead8Bytes [ 
 	
 	"8 bytes supported by the CPP function directly"
 	| bufferRead |

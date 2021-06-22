@@ -73,7 +73,7 @@ SpikeRISCVSimulator >> tp [
 { #category : #registers }
 SpikeRISCVSimulator >> wordSize [ 
 	
-	^ 4
+	^ 8
 ]
 
 { #category : #registers }

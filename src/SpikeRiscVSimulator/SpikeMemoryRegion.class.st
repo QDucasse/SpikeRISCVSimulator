@@ -1,3 +1,9 @@
+"
+A `MemoryRegion` is a portion of memory with a _base address_, a _size_ and _contents_. It is used by the **`SpikeRISCVSimulator`** and the underlying **`Spike`** C++ implementation as the actual memory. It inherits from `FFIExternalStructure` as it mimics the C++ implementation. 
+
+It is generated in the initilization of **`Spike`** and can be accessed and modified through the methods `Spike>>>memoryAt:write:` and `Spike>>>memoryAt:read:`.
+
+"
 Class {
 	#name : #SpikeMemoryRegion,
 	#superclass : #FFIExternalStructure,
