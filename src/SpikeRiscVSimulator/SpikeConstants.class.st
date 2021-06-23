@@ -18,9 +18,21 @@ SpikeConstants class >> initialize [
 ]
 
 { #category : #initialization }
+SpikeConstants class >> isExecutionMaxCount: code [
+
+	^ code = SP_ERR_MAX_COUNT
+]
+
+{ #category : #initialization }
 SpikeConstants class >> isExecutionOk: code [
 
 	^ (code = SP_ERR_OK) | (code = SP_ERR_TIMEOUT) | (code = SP_ERR_MAX_COUNT)
+]
+
+{ #category : #initialization }
+SpikeConstants class >> isExecutionTimeout: code [
+
+	^ code = SP_ERR_TIMEOUT
 ]
 
 { #category : #initialization }
