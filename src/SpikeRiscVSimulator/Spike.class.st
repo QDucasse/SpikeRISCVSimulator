@@ -135,6 +135,16 @@ Spike >> memoryAt: anAddress readInto: aByteArray size: aSize [
 	^ result
 ]
 
+{ #category : #memory }
+Spike >> memoryAt: anAddress readNext: aSize [
+
+	| bufferRead |
+	bufferRead := ByteArray new: aSize.
+	self memoryAt: anAddress readInto: bufferRead.
+	^ bufferRead 
+	
+]
+
 { #category : #registers }
 Spike >> memoryAt: anAddress write: aByteArray [
 

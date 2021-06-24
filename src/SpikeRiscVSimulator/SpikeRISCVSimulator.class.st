@@ -73,6 +73,18 @@ SpikeRISCVSimulator >> instructionPointerRegister [
 	^ SpikeRISCVRegisters pc
 ]
 
+{ #category : #register }
+SpikeRISCVSimulator >> lr [
+
+	^ self x1
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> pc [
+
+	^ self readRegister: SpikeRISCVRegisters pc
+]
+
 { #category : #registers }
 SpikeRISCVSimulator >> programCounterRegisterValue: anInteger [ 
 
@@ -84,6 +96,12 @@ SpikeRISCVSimulator >> ra [
 
 	"Return address"
 	^ self readRegister: SpikeRISCVRegisters x1
+]
+
+{ #category : #registers }
+SpikeRISCVSimulator >> registerList [
+
+	^ #(lr pc sp fp x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x16 x19 x20 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31)
 ]
 
 { #category : #registers }
@@ -124,6 +142,16 @@ SpikeRISCVSimulator >> startAt: beginAddress until: endAddress timeout: timeout 
 	simulator startAt: beginAddress until: endAddress timeout: timeout count: count
 ]
 
+{ #category : #execution }
+SpikeRISCVSimulator >> step [
+
+	self
+		startAt: self pc
+		until: 0
+		timeout: 0
+		count: 1
+]
+
 { #category : #registers }
 SpikeRISCVSimulator >> tp [
 
@@ -135,6 +163,198 @@ SpikeRISCVSimulator >> tp [
 SpikeRISCVSimulator >> wordSize [ 
 	
 	^ 8
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x0 [
+
+	^ self readRegister: SpikeRISCVRegisters x0
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x1 [
+
+	^ self readRegister: SpikeRISCVRegisters x1
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x10 [
+
+	^ self readRegister: SpikeRISCVRegisters x10
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x11 [
+
+	^ self readRegister: SpikeRISCVRegisters x11
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x12 [
+
+	^ self readRegister: SpikeRISCVRegisters x12
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x13 [
+
+	^ self readRegister: SpikeRISCVRegisters x13
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x14 [
+
+	^ self readRegister: SpikeRISCVRegisters x14
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x15 [
+
+	^ self readRegister: SpikeRISCVRegisters x15
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x16 [
+
+	^ self readRegister: SpikeRISCVRegisters x16
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x17 [
+
+	^ self readRegister: SpikeRISCVRegisters x17
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x18 [
+
+	^ self readRegister: SpikeRISCVRegisters x18
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x19 [
+
+	^ self readRegister: SpikeRISCVRegisters x19
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x2 [
+
+	^ self readRegister: SpikeRISCVRegisters x2
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x20 [
+
+	^ self readRegister: SpikeRISCVRegisters x20
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x21 [
+
+	^ self readRegister: SpikeRISCVRegisters x21
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x22 [
+
+	^ self readRegister: SpikeRISCVRegisters x22
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x23 [
+
+	^ self readRegister: SpikeRISCVRegisters x23
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x24 [
+
+	^ self readRegister: SpikeRISCVRegisters x24
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x25 [
+
+	^ self readRegister: SpikeRISCVRegisters x25
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x26 [
+
+	^ self readRegister: SpikeRISCVRegisters x26
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x27 [
+
+	^ self readRegister: SpikeRISCVRegisters x27
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x28 [
+
+	^ self readRegister: SpikeRISCVRegisters x28
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x29 [
+
+	^ self readRegister: SpikeRISCVRegisters x29
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x3 [
+
+	^ self readRegister: SpikeRISCVRegisters x3
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x30 [
+
+	^ self readRegister: SpikeRISCVRegisters x30
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x31 [
+
+	^ self readRegister: SpikeRISCVRegisters x31
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x4 [
+
+	^ self readRegister: SpikeRISCVRegisters x4
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x5 [
+
+	^ self readRegister: SpikeRISCVRegisters x5
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x6 [
+
+	^ self readRegister: SpikeRISCVRegisters x6
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x7 [
+
+	^ self readRegister: SpikeRISCVRegisters x7
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x8 [
+
+	^ self readRegister: SpikeRISCVRegisters x8
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> x9 [
+
+	^ self readRegister: SpikeRISCVRegisters x9
 ]
 
 { #category : #registers }
