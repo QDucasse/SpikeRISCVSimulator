@@ -25,7 +25,7 @@ SpikeRISCVSimulator >> baseRegister [
 { #category : #disassembling }
 SpikeRISCVSimulator >> disassembler [ 
 
-	^ LLVMDisassembler riscv32
+	^ LLVMDisassembler riscv64
 ]
 
 { #category : #building }
@@ -110,12 +110,6 @@ SpikeRISCVSimulator >> returnAddressRegisterValue: anInteger [
 	self writeRegister: SpikeRISCVRegisters x1 value: anInteger
 ]
 
-{ #category : #registers }
-SpikeRISCVSimulator >> rip: anInteger [ 
-
-	^ simulator pc
-]
-
 { #category : #'as yet unclassified' }
 SpikeRISCVSimulator >> simulateLeafCallOf: destinationAddress nextpc: returnAddress memory: anUndefinedObject [ 
 
@@ -150,6 +144,48 @@ SpikeRISCVSimulator >> step [
 		until: 0
 		timeout: 0
 		count: 1
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> t0 [
+
+	^ self x5
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> t1 [
+
+	^ self x6
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> t2 [
+
+	^ self x7
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> t3 [
+
+	^ self x28
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> t4 [
+
+	^ self x29
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> t5 [
+
+	^ self x30
+]
+
+{ #category : #register }
+SpikeRISCVSimulator >> t6 [
+
+	^ self x31
 ]
 
 { #category : #registers }
