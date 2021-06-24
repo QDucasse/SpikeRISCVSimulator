@@ -4,10 +4,34 @@ Class {
 	#category : #SpikeRiscVSimulator
 }
 
+{ #category : #'as yet unclassified' }
+SpikeRISCVSimulator class >> riscv64 [ 
+
+	^ self new
+]
+
+{ #category : #'as yet unclassified' }
+SpikeRISCVSimulator class >> supportsISA: isa [ 
+	
+	^ isa = #riscv64
+]
+
+{ #category : #registers }
+SpikeRISCVSimulator >> baseRegister [
+
+	^ SpikeRISCVRegisters x26
+]
+
 { #category : #disassembling }
 SpikeRISCVSimulator >> disassembler [ 
 
 	^ LLVMDisassembler riscv32
+]
+
+{ #category : #building }
+SpikeRISCVSimulator >> finishMappingMemory [
+	
+	simulator initializeSimulator.
 ]
 
 { #category : #registers }
@@ -50,6 +74,12 @@ SpikeRISCVSimulator >> instructionPointerRegister [
 ]
 
 { #category : #registers }
+SpikeRISCVSimulator >> programCounterRegisterValue: anInteger [ 
+
+	self writeRegister: SpikeRISCVRegisters pc value: anInteger
+]
+
+{ #category : #registers }
 SpikeRISCVSimulator >> ra [ 
 
 	"Return address"
@@ -57,10 +87,41 @@ SpikeRISCVSimulator >> ra [
 ]
 
 { #category : #registers }
+SpikeRISCVSimulator >> returnAddressRegisterValue: anInteger [ 
+	
+	self writeRegister: SpikeRISCVRegisters x1 value: anInteger
+]
+
+{ #category : #registers }
+SpikeRISCVSimulator >> rip: anInteger [ 
+
+	^ simulator pc
+]
+
+{ #category : #'as yet unclassified' }
+SpikeRISCVSimulator >> simulateLeafCallOf: destinationAddress nextpc: returnAddress memory: anUndefinedObject [ 
+
+	self returnAddressRegisterValue: returnAddress.
+	self programCounterRegisterValue: destinationAddress
+]
+
+{ #category : #registers }
 SpikeRISCVSimulator >> sp [ 
 
 	"Stack Pointer"
-	^ self readRegister: SpikeRISCVRegisters x2
+	^ self readRegister: self stackPointerRegister 
+]
+
+{ #category : #registers }
+SpikeRISCVSimulator >> stackPointerRegister [
+	
+	^ SpikeRISCVRegisters x2
+]
+
+{ #category : #execution }
+SpikeRISCVSimulator >> startAt: beginAddress until: endAddress timeout: timeout count: count [
+
+	simulator startAt: beginAddress until: endAddress timeout: timeout count: count
 ]
 
 { #category : #registers }

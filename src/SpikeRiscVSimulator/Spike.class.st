@@ -39,6 +39,20 @@ Spike >> doMemoryReadBytes: size atAddress: address inBuffer: bytes [
 ]
 
 { #category : #registers }
+Spike >> doRegister: regid readInto: value [
+
+	"Read the value of register no regid and store it in value"
+	^ self ffiCall: #(Sp_err read_register(self, int regid, void* value))
+]
+
+{ #category : #registers }
+Spike >> doRegister: regid write: value [
+
+	"Write the contents of value in register regid"
+	^ self ffiCall: #(Sp_err write_register(self, int regid, void* value))
+]
+
+{ #category : #registers }
 Spike >> doStartAt: beginAddress until: endAddress timeout: timeout count: count [
 
 	"Launches the simulation with a begin address and three different ways to stop: 
@@ -75,15 +89,35 @@ Spike >> getMemoryExceptionCause [
 ]
 
 { #category : #initialization }
-Spike >> initialize [ 
+Spike >> initialize [
+
+	super initialize.
+	memoryRegions := OrderedCollection new.
+]
+
+{ #category : #initialization }
+Spike >> initializeSimulator [
 
 	| externalArray |
-	super initialize.
-	externalArray := FFIExternalArray externalNewType: #SpikeMemoryRegion size: 1.
+	externalArray := FFIExternalArray
+		                 externalNewType: #SpikeMemoryRegion
+		                 size: memoryRegions size.
 	externalArray autoRelease.
-	memoryRegions := { (SpikeMemoryRegion base: 16r1000 content: (ByteArray new: 4096)) }.
-	externalArray at: 1 put: (memoryRegions at:1).
-	handle := self createSimulatorWithMemoryRegions: externalArray getHandle ofSize: 1.
+	memoryRegions withIndexDo: [ :e :i | 
+		externalArray at: i put: e.
+	].
+
+	handle := self
+		createSimulatorWithMemoryRegions: externalArray getHandle
+		ofSize: memoryRegions size
+]
+
+{ #category : #initialization }
+Spike >> mapHostMemory: aMemory atAddress: anAddress withPermissions: permissions [
+
+	memoryRegions add: (SpikeMemoryRegion
+		base: anAddress
+		content: aMemory).
 ]
 
 { #category : #registers }
@@ -121,14 +155,16 @@ Spike >> memoryAt: anAddress write: aByteArray size: aSize [
 Spike >> register: regid readInto: value [
 
 	"Read the value of register no regid and store it in value"
-	^ self ffiCall: #(Sp_err read_register(self, int regid, void* value))
+	value size = 8 ifFalse: [ self error: 'Register values should be 8 bytes long' ].	
+	^ self doRegister: regid readInto: value
 ]
 
 { #category : #registers }
 Spike >> register: regid write: value [
 
 	"Write the contents of value in register regid"
-	^ self ffiCall: #(Sp_err write_register(self, int regid, void* value))
+	value size = 8 ifFalse: [ self error: 'Register values should be 8 bytes long' ].
+	^ self doRegister: regid write: value
 ]
 
 { #category : #registers }
@@ -146,6 +182,14 @@ Spike >> stringOfErrorCode: code [
 
 	"Returns the corresponding message given an error code"
 	^ self ffiCall: #(const char* sp_strerror(int code))
+]
+
+{ #category : #registers }
+Spike >> verifyErrorCode: anErrorCode [ 
+
+	"Check that the error code is 0 (SP_ERR_OK), otherwise calls the error with the string version"
+	(SpikeConstants isOk: anErrorCode) ifTrue: [ ^ self ].
+	SpikeError signal: (self stringOfErrorCode: anErrorCode)
 ]
 
 { #category : #registers }

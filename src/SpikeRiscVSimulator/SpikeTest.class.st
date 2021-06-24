@@ -18,13 +18,15 @@ SpikeTest >> setUp [
 
 	super setUp.
 	spi := Spike new.
+	spi mapHostMemory: (ByteArray new: 4096) atAddress: 16r1000 withPermissions: nil.
+	spi initializeSimulator.
 	
 ]
 
 { #category : #running }
 SpikeTest >> tearDown [
 
-	spi finalize.
+	"spi finalize."
 	
 ]
 
@@ -33,9 +35,9 @@ SpikeTest >> testExecuteAddInstruction [
 	
 	"Add two values to registers x6 and x7, add them and store the result in x5"
 	| bufferX5 bufferX6 bufferX7 instrAdd |
-	bufferX5 := #[16r00 16r00 16r00 16r00]. 
-	bufferX6 := #[16r11 16r11 16r00 16r00].
-	bufferX7 := #[16r00 16r00 16r11 16r11].	
+	bufferX5 := #[16r00 16r00 16r00 16r00 0 0 0 0] copy. 
+	bufferX6 := #[16r11 16r11 16r00 16r00 0 0 0 0] copy.
+	bufferX7 := #[16r00 16r00 16r11 16r11 0 0 0 0] copy.	
 	instrAdd := #[16rB3 16r02 16r73 16r00].
 	"Write the values to the registers"
 	spi register: SpikeRISCVRegisters x5 write: bufferX5.
@@ -45,7 +47,7 @@ SpikeTest >> testExecuteAddInstruction [
 	spi memoryAt: 16r1000 write: instrAdd.
 	spi startAt: 16r1000 until: 16r1004 timeout: 0 count: 0.
 	spi register: SpikeRISCVRegisters x5 readInto: bufferX5.
-	self assert: bufferX5 equals: #[16r11 16r11 16r11 16r11].
+	self assert: bufferX5 equals: #[16r11 16r11 16r11 16r11 0 0 0 0].
 ]
 
 { #category : #tests }
@@ -85,9 +87,9 @@ SpikeTest >> testExecuteInfiniteLoopStopsOnTimeout [
 	
 	"Execute an infinite loop that should be stopped on timeout"
 	| bufferX5 bufferX6 bufferX7 instrAdd instrJmp res |
-	bufferX5 := #[16r00 16r00 16r00 16r00]. 
-	bufferX6 := #[16r11 16r11 16r00 16r00].
-	bufferX7 := #[16r00 16r00 16r11 16r11].	
+	bufferX5 := #[16r00 16r00 16r00 16r00 0 0 0 0] copy. 
+	bufferX6 := #[16r11 16r11 16r00 16r00 0 0 0 0] copy.
+	bufferX7 := #[16r00 16r00 16r11 16r11 0 0 0 0] copy.	
 	instrAdd := #[16rB3 16r02 16r73 16r00].
 	instrJmp := #[16re5 16rbf].
 	"Write the values to the registers"
@@ -159,11 +161,11 @@ SpikeTest >> testMemoryWriteRead8Bytes [
 SpikeTest >> testReadAndWriteRegisterPC [
 
 	| buffer_write buffer_read | 
-	buffer_write := #[1 2 3 4 5 6 7 8].
+	buffer_write := #[1 2 3 4 5 6 7 8] copy.
 	buffer_read  := ByteArray new: 8.
 	spi register: 32 write: buffer_write.
 	spi register: 32 readInto: buffer_read.
-	self assert: buffer_read equals: #[1 2 3 4 0 0 0 0].
+	self assert: buffer_read equals: #[1 2 3 4 5 6 7 8].
 
 
 ]
@@ -172,11 +174,11 @@ SpikeTest >> testReadAndWriteRegisterPC [
 SpikeTest >> testReadAndWriteRegisterX3 [
 
 	| buffer_write buffer_read | 
-	buffer_write := #[1 2 3 4 5 6 7 8].
+	buffer_write := #[1 2 3 4 5 6 7 8] copy.
 	buffer_read  := ByteArray new: 8.
 	spi register: 3 write: buffer_write.
 	spi register: 3 readInto: buffer_read.
-	self assert: buffer_read equals: #[1 2 3 4 0 0 0 0].
+	self assert: buffer_read equals: #[1 2 3 4 5 6 7 8].
 
 
 ]
@@ -185,21 +187,10 @@ SpikeTest >> testReadAndWriteRegisterX3 [
 SpikeTest >> testRegisterReadInto [
 
 	| buffer_read errorCode | 
-	buffer_read  := #[15 15 15 15].
+	buffer_read  := #[15 15 15 15 15 15 15 15] copy.
 	errorCode := spi register: 3 readInto: buffer_read.
-	self assert: buffer_read equals: #[0 0 0 0].
+	self assert: buffer_read equals: #[0 0 0 0 0 0 0 0].
 	
-
-
-]
-
-{ #category : #tests }
-SpikeTest >> testRegisterReadIntoOnlyTakes4Bytes [
-
-	| buffer_read | 
-	buffer_read  := #[15 15 15 15 15 15 15 15].
-	spi register: 3 readInto: buffer_read.
-	self assert: buffer_read equals: #[0 0 0 0 15 15 15 15].
 
 
 ]
