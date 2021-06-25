@@ -1,7 +1,7 @@
 Class {
 	#name : #SpikeRISCVSimulator,
 	#superclass : #ProcessorSimulator,
-	#category : #SpikeRiscVSimulator
+	#category : #SpikeRISCVSimulator
 }
 
 { #category : #'as yet unclassified' }

@@ -8,7 +8,7 @@ Class {
 		'SpikeConstants',
 		'SpikeTypes'
 	],
-	#category : #SpikeRiscVSimulator
+	#category : #SpikeRISCVSimulator
 }
 
 { #category : #resources }

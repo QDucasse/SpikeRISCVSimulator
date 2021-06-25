@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Sp_err'
 	],
-	#category : #SpikeRiscVSimulator
+	#category : #SpikeRISCVSimulator
 }
 
 { #category : #initialization }

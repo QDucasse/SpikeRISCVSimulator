@@ -6,7 +6,7 @@ Class {
 		'SP_ERR_OK',
 		'SP_ERR_TIMEOUT'
 	],
-	#category : #SpikeRiscVSimulator
+	#category : #SpikeRISCVSimulator
 }
 
 { #category : #initialization }

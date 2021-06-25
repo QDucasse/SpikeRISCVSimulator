@@ -68,7 +68,7 @@ Class {
 		'SPIKE_RISCV_REG_X8',
 		'SPIKE_RISCV_REG_X9'
 	],
-	#category : #SpikeRiscVSimulator
+	#category : #SpikeRISCVSimulator
 }
 
 { #category : #initialization }

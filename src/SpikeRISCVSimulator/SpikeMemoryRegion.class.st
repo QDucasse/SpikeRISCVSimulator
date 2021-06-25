@@ -15,7 +15,7 @@ Class {
 		'OFFSET_CONTENT',
 		'OFFSET_SIZE'
 	],
-	#category : #SpikeRiscVSimulator
+	#category : #SpikeRISCVSimulator
 }
 
 { #category : #'field definition' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'spi'
 	],
-	#category : #SpikeRiscVSimulator
+	#category : #SpikeRISCVSimulator
 }
 
 { #category : #tests }

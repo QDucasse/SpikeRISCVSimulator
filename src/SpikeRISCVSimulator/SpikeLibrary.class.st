@@ -1,7 +1,7 @@
 Class {
 	#name : #SpikeLibrary,
 	#superclass : #FFILibrary,
-	#category : #SpikeRiscVSimulator
+	#category : #SpikeRISCVSimulator
 }
 
 { #category : #'accessing platform' }
