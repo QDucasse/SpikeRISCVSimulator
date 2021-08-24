@@ -66,6 +66,44 @@ SpikeRISCVSimulator >> initialize [
 	self initializeRegisterAliases.
 ]
 
+{ #category : #initialization }
+SpikeRISCVSimulator >> initializeRegisterAliases [
+
+	registerAliases
+		at: #x0  put: #zero;
+		at: #x1  put: #ra;
+		at: #x2  put: #'sp     | sp';
+		at: #x3  put: #gp;
+		at: #x4  put: #tp;
+		at: #x5  put: #'t0     | ip1';
+		at: #x6  put: #'t1     | ip2';		
+		at: #x7  put: #t2;
+		at: #x8  put: #'s0(fp) | fp';		
+		at: #x9  put: #s1;
+		at: #x10 put: #'a0     | arg0';		
+		at: #x11 put: #'a1     | arg1';
+		at: #x12 put: #a2;	
+		at: #x13 put: #a3;
+		at: #x14 put: #a4;
+		at: #x15 put: #a5;
+		at: #x16 put: #a6;
+		at: #x17 put: #a7;
+		at: #x18 put: #'s2     | extra0';
+		at: #x19 put: #'s3     | extra1';
+		at: #x20 put: #'s4     | extra2';
+		at: #x21 put: #s5;
+		at: #x22 put: #'s6     | temp';
+		at: #x23 put: #'s7     | class';
+		at: #x24 put: #'s8     | receiver';
+		at: #x25 put: #'s9     | argnum';
+		at: #x26 put: #'s10   | varbase';
+		at: #x27 put: #'s11   | flag';
+		at: #x28 put: #t3; 
+		at: #x29 put: #t4;
+		at: #x30 put: #t5;
+		at: #x31 put: #t6
+]
+
 { #category : #registers }
 SpikeRISCVSimulator >> instructionPointerRegister [
 	
