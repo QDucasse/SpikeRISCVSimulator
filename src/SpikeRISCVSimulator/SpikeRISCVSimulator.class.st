@@ -17,9 +17,27 @@ SpikeRISCVSimulator class >> supportsISA: isa [
 ]
 
 { #category : #registers }
+SpikeRISCVSimulator >> arg0Register [
+	
+	^ SpikeRISCVRegisters x10
+]
+
+{ #category : #accessing }
+SpikeRISCVSimulator >> argument0RegisterValue: anInteger [ 
+
+	self writeRegister: SpikeRISCVRegisters x10 value: anInteger
+]
+
+{ #category : #registers }
 SpikeRISCVSimulator >> baseRegister [
 
 	^ SpikeRISCVRegisters x26
+]
+
+{ #category : #'as yet unclassified' }
+SpikeRISCVSimulator >> cResultRegister [
+
+	^ self x12
 ]
 
 { #category : #disassembling }
@@ -156,6 +174,13 @@ SpikeRISCVSimulator >> simulateLeafCallOf: destinationAddress nextpc: returnAddr
 ]
 
 { #category : #registers }
+SpikeRISCVSimulator >> smashRegisterAccessors [
+	
+	"Caller saved registers to smash"
+	^#( x1: x5: x6: x7: x10: x11: x12: x13: x14: x15: x16: x17: x28: x29: x30: x31:)
+]
+
+{ #category : #registers }
 SpikeRISCVSimulator >> sp [ 
 
 	"Stack Pointer"
@@ -224,6 +249,12 @@ SpikeRISCVSimulator >> t5 [
 SpikeRISCVSimulator >> t6 [
 
 	^ self x31
+]
+
+{ #category : #accessing }
+SpikeRISCVSimulator >> temporaryRegisterValue [
+	
+	^ self x22
 ]
 
 { #category : #registers }
