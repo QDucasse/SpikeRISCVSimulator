@@ -74,6 +74,12 @@ SpikeRISCVSimulator >> gp [
 	^ self readRegister: SpikeRISCVRegisters x3
 ]
 
+{ #category : #execution }
+SpikeRISCVSimulator >> hasLinkRegister [ 
+
+	^ true
+]
+
 { #category : #initialization }
 SpikeRISCVSimulator >> initialize [ 
 	
@@ -127,6 +133,12 @@ SpikeRISCVSimulator >> instructionPointerRegister [
 	
 	"Instruction Pointer / Program Counter"
 	^ SpikeRISCVRegisters pc
+]
+
+{ #category : #execution }
+SpikeRISCVSimulator >> linkRegisterValue: aValue [ 
+
+	^ self writeRegister: SpikeRISCVRegisters x1 value: aValue
 ]
 
 { #category : #register }
