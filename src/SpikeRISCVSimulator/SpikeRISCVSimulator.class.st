@@ -106,10 +106,10 @@ SpikeRISCVSimulator >> initializeRegisterAliases [
 		at: #x9  put: #s1;
 		at: #x10 put: #'a0     | arg0';		
 		at: #x11 put: #'a1     | arg1';
-		at: #x12 put: #a2;	
-		at: #x13 put: #a3;
-		at: #x14 put: #a4;
-		at: #x15 put: #a5;
+		at: #x12 put: #'a2     | carg0';	
+		at: #x13 put: #'a3     | carg1';
+		at: #x14 put: #'a4     | carg2';
+		at: #x15 put: #'a5     | carg3';
 		at: #x16 put: #a6;
 		at: #x17 put: #a7;
 		at: #x18 put: #'s2     | extra0';
@@ -138,7 +138,7 @@ SpikeRISCVSimulator >> instructionPointerRegister [
 { #category : #execution }
 SpikeRISCVSimulator >> linkRegisterValue: aValue [ 
 
-	^ self writeRegister: SpikeRISCVRegisters x1 value: aValue
+	self writeRegister: SpikeRISCVRegisters x1 value: aValue
 ]
 
 { #category : #register }
@@ -169,19 +169,13 @@ SpikeRISCVSimulator >> ra [
 { #category : #registers }
 SpikeRISCVSimulator >> registerList [
 
-	^ #(lr pc sp fp x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x16 x19 x20 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31)
-]
-
-{ #category : #registers }
-SpikeRISCVSimulator >> returnAddressRegisterValue: anInteger [ 
-	
-	self writeRegister: SpikeRISCVRegisters x1 value: anInteger
+	^ #(lr pc sp fp x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x19 x20 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31)
 ]
 
 { #category : #'as yet unclassified' }
 SpikeRISCVSimulator >> simulateLeafCallOf: destinationAddress nextpc: returnAddress memory: anUndefinedObject [ 
 
-	self returnAddressRegisterValue: returnAddress.
+	self linkRegisterValue: returnAddress.
 	self programCounterRegisterValue: destinationAddress
 ]
 
