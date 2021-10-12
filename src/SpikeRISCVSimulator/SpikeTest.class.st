@@ -26,7 +26,8 @@ SpikeTest >> setUp [
 { #category : #running }
 SpikeTest >> tearDown [
 
-	"spi finalize."
+	super tearDown.
+	spi free.
 	
 ]
 

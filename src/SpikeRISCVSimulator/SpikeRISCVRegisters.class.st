@@ -286,6 +286,12 @@ SpikeRISCVRegisters class >> f29 [
 ]
 
 { #category : #accessing }
+SpikeRISCVRegisters class >> f3 [
+	
+	^ SPIKE_RISCV_REG_F3
+]
+
+{ #category : #accessing }
 SpikeRISCVRegisters class >> f30 [
 	
 	^ SPIKE_RISCV_REG_F30
