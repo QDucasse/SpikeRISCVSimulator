@@ -70,6 +70,12 @@ SpikeRISCVSimulator >> carg3Register [
 	^ SpikeRISCVRegisters x15
 ]
 
+{ #category : #registers }
+SpikeRISCVSimulator >> classRegister [
+
+	^ SpikeRISCVRegisters x23
+]
+
 { #category : #register }
 SpikeRISCVSimulator >> disassembler [ 
 
